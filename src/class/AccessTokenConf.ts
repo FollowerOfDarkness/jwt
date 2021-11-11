@@ -4,11 +4,11 @@ export default class AccessTokenConf {
   private token?: string
   private playload?: JwtPayload
   private secret: string
-  private expires: number
+  private expires?: number
 
   constructor(
     data: string | JwtPayload,
-    config: { secret: string; expires: number }
+    config: { secret: string; expires?: number }
   ) {
     this.secret = config.secret
     this.expires = config.expires
