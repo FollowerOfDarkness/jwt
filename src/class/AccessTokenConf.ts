@@ -1,12 +1,17 @@
-import { JwtPayload, verify as jwtVerify } from "jsonwebtoken"
+import { JwtPayload, sign, verify as jwtVerify } from "jsonwebtoken"
 
 export default class AccessTokenConf {
   private token?: string
   private playload?: JwtPayload
   private secret: string
+  private expires: number
 
-  constructor(data: string | JwtPayload, config: { secret: string }) {
+  constructor(
+    data: string | JwtPayload,
+    config: { secret: string; expires: number }
+  ) {
     this.secret = config.secret
+    this.expires = config.expires
     if (typeof data === "string") {
       this.token = data
     } else if (typeof data === "object") {
@@ -17,12 +22,8 @@ export default class AccessTokenConf {
   }
 
   verify(fingerprintHash?: string) {
-    const token = this.token
-    if (!token) {
-      throw new Error(
-        "This instance must be created with a token or the token must be generated first"
-      )
-    }
+    const token = this.getToken()
+
     const playload = jwtVerify(token, this.secret)
     if (typeof playload === "string") {
       throw new Error('The header must be set to "typ": "JWT"')
@@ -40,9 +41,15 @@ export default class AccessTokenConf {
     return this
   }
 
-  // genToken({}) {
+  genToken(fingerprintHash?: string) {
+    this.token = sign(
+      { ...this.getPlayload(), ...{ fingerprint: fingerprintHash } },
+      this.secret,
+      { expiresIn: this.expires }
+    )
 
-  // }
+    return this
+  }
 
   getToken() {
     if (this.token) {
