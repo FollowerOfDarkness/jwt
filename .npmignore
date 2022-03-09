@@ -1,0 +1,8 @@
+*
+!/dist
+!/dist/*
+!/dist/class
+!/dist/class/*
+!/dist
+!/dist/types
+!/dist/types/*

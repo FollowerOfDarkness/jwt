@@ -6,11 +6,11 @@ import { AccessTokenType } from './types';
 function jwtInit(options: { secret: string }) {
   class AccessToken extends AccessTokenConf {
     constructor(data: string | JwtPayload) {
-      super(data, { secret: options.secret })
+      super(data, { secret: options.secret, expires: options.expires})
     }
   }
 
-  return { AccessToken: <typeof AccessTokenType>AccessToken }
+  return { AccessToken }
 }
 
 export { GetAxios, jwtInit }
