@@ -8,8 +8,7 @@ export declare class AccessTokenType {
 }
 
 export interface ActualPayload {
-    id: number,
-    role: number
+    [key: string]: any
 }
 
 export interface UtilityPayload {
