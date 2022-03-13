@@ -45,8 +45,8 @@ export default class GetAxios {
     }
 
     /**Получить аутентификационные данные (login)*/
-    async login(name: string, pass: string) {
-        const serverResonse = await this.axiosAuthServer.post<{ access_token: string } | undefined>("/login", { name, pass })
+    async login(email: string, pass: string) {
+        const serverResonse = await this.axiosAuthServer.post<{ access_token: string } | undefined>("/login", { email, pass })
         const token = serverResonse?.data?.access_token
         this.clearAccessToken()
         this.setToken(token)
