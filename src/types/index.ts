@@ -6,8 +6,7 @@ export interface ActualPayload {
 
 export interface UtilityPayload {
     iat: number,
-    exp: number,
-    fingerprint: string
+    exp: number
 }
 
 export type AllPayload = ActualPayload & UtilityPayload
